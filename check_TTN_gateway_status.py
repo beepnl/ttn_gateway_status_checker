@@ -90,14 +90,18 @@ def check_gateway(state):
 
         if ( delta > KEEPALIVE_TIMEOUT_S ):
 
-            send_message_to_slack("Gateway " + GATEWAY_ID + " is DOWN since " + last_seen_human)
-            # print(last_seen)
-            print("Gateway " + GATEWAY_ID + " is DOWN since " + last_seen_human)
+            if (ttnup == "False"):
+                change_last_state(ttnup)
+                print("Gateway already down since" + last_seen_human )
+            else:
+                send_message_to_slack("Gateway " + GATEWAY_ID + " is DOWN since " + last_seen_human)
+                # print(last_seen)
+                print("Gateway " + GATEWAY_ID + " is DOWN since " + last_seen_human)
 
-            # print("Gateway " + GATEWAY_ID + " is DOWN since " + time.strftime('%a, %d %b %Y %H:%M:%S GMT',last_seen))
-            ttnup = False
-            change_last_state(ttnup)
-            # print(ttnup + "was al")
+                # print("Gateway " + GATEWAY_ID + " is DOWN since " + time.strftime('%a, %d %b %Y %H:%M:%S GMT',last_seen))
+                ttnup = False
+                change_last_state(ttnup)
+                # print(ttnup + "was al")
 
 
         else:
